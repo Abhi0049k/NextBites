@@ -7,8 +7,13 @@ export function generateStaticParams() {
   return recipes.map((recipe) => ({ id: recipe.id }));
 }
 
-export default function RecipePage({ params }: { params: { id: string } }) {
-  const recipe = getRecipe(params.id);
+export default async function RecipePage({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
+  const { id } = await params;
+  const recipe = getRecipe(id);
   if (!recipe) notFound();
 
   return (
